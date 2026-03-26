@@ -1,0 +1,29 @@
+stages:
+  - lint
+  - security
+  - mirror
+
+lint:powershell:
+  stage: lint
+  image: mcr.microsoft.com/powershell:latest
+  script:
+    - pwsh -Command "Get-ChildItem -Recurse -Filter '*.ps1' | ForEach-Object { Write-Host 'Checking:' $_.FullName; [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$null, [ref]$errors) | Out-Null; if ($errors) { $errors | ForEach-Object { Write-Error $_ }; exit 1 } }"
+
+security:gitleaks:
+  stage: security
+  image:
+    name: zricethezav/gitleaks:latest
+    entrypoint: [""]
+  script:
+    - gitleaks detect --source . --verbose --no-git
+  allow_failure: false
+
+include:
+  - project: 'user-projects/claude-standards'
+    file: '/ci-templates/github-mirror.yml'
+    ref: main
+
+mirror:github:
+  extends: .github-mirror
+  variables:
+    GITHUB_REPO_URL: "git@github.com:LemonWasTakenAgain/Powershell_Scripts.git"
