@@ -22,19 +22,16 @@ lint:powershell:
         if ($hasErrors) { exit 1 }
       '
 
-security:gitleaks:
-  stage: security
-  image:
-    name: zricethezav/gitleaks:latest
-    entrypoint: [""]
-  script:
-    - gitleaks detect --source . --verbose --no-git
-  allow_failure: false
-
 include:
+  - project: 'user-projects/claude-standards'
+    file: '/ci-templates/generic-security.yml'
+    ref: main
   - project: 'user-projects/claude-standards'
     file: '/ci-templates/github-mirror.yml'
     ref: main
+
+security:gitleaks:
+  extends: .gitleaks-scan
 
 mirror:github:
   extends: .github-mirror
