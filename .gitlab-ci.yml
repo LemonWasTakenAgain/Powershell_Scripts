@@ -7,7 +7,20 @@ lint:powershell:
   stage: lint
   image: mcr.microsoft.com/powershell:latest
   script:
-    - pwsh -Command "Get-ChildItem -Recurse -Filter '*.ps1' | ForEach-Object { Write-Host 'Checking:' $_.FullName; [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$null, [ref]$errors) | Out-Null; if ($errors) { $errors | ForEach-Object { Write-Error $_ }; exit 1 } }"
+    - |
+      pwsh -Command '
+        $hasErrors = $false
+        Get-ChildItem -Recurse -Filter "*.ps1" | ForEach-Object {
+          Write-Host "Checking: $($_.FullName)"
+          $parseErrors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$null, [ref]$parseErrors) | Out-Null
+          if ($parseErrors) {
+            $parseErrors | ForEach-Object { Write-Error $_ }
+            $hasErrors = $true
+          }
+        }
+        if ($hasErrors) { exit 1 }
+      '
 
 security:gitleaks:
   stage: security
