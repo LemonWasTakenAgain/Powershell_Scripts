@@ -6,6 +6,7 @@ Modular collection of PowerShell scripts for Windows system administration,
 DevOps, and development. Requires PowerShell 5.1+ (7+ for parallel scripts).
 
 - GitLab: https://gitlab.steelcanvas.studio/user-projects/powershell-scripts
+- GitLab Project ID: 13 (needed for MR API calls)
 - GitHub: https://github.com/LemonWasTakenAgain/Powershell_Scripts
 
 ## Commands
