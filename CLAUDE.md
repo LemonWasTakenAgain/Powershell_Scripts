@@ -1,12 +1,18 @@
 # PowerShell Scripts
 
+## Agent Identity
+**Role:** Dev Manager — manages app repos, scripting, and claude-standards.
+**Prompt:** `~/projects/homelab/agent-prompts/01-dev-manager.md`
+**Standards:** `~/.claude/rules/agent-standards.md`, `~/.claude/rules/pr-standards.md`
+After `/compact`, re-read your prompt file to restore full role context.
+
 ## Project Context
 
 Modular collection of PowerShell scripts for Windows system administration,
 DevOps, and development. Requires PowerShell 5.1+ (7+ for parallel scripts).
 
-- GitLab: https://gitlab.steelcanvas.studio/user-projects/powershell-scripts
-- GitLab Project ID: 13 (needed for MR API calls)
+- GitLab: https://gitlab.steelcanvas.dev/user-projects/powershell-scripts
+- GitLab Project ID: 13
 - GitHub: https://github.com/LemonWasTakenAgain/Powershell_Scripts
 
 ## Commands
