@@ -28,7 +28,7 @@ param(
 )
 
 function Write-Info    { Write-Host "[INFO]  $args" -ForegroundColor Green }
-function Write-Warning { Write-Host "[WARN]  $args" -ForegroundColor Yellow }
+function Write-Warn { Write-Host "[WARN]  $args" -ForegroundColor Yellow }
 function Write-Section { Write-Host "`n--- $args ---" -ForegroundColor White }
 
 $RebootRequired = $false
@@ -52,7 +52,7 @@ if (-not $SkipWindowsUpdate) {
         }
         if (Get-WURebootStatus -Silent) {
             $RebootRequired = $true
-            Microsoft.PowerShell.Utility\Write-Warning "Reboot required after Windows Updates."
+            Write-Warn "Reboot required after Windows Updates."
         }
     }
 }
@@ -65,7 +65,7 @@ if (Get-Command winget -ErrorAction SilentlyContinue) {
     Write-Info "Upgrading all winget packages..."
     winget upgrade --all --include-unknown --silent --accept-source-agreements --accept-package-agreements
 } else {
-    Microsoft.PowerShell.Utility\Write-Warning "winget not found — skipping."
+    Write-Warn "winget not found — skipping."
 }
 
 # Chocolatey
@@ -105,6 +105,6 @@ if ($RebootRequired) {
         Start-Sleep 10
         Restart-Computer -Force
     } else {
-        Microsoft.PowerShell.Utility\Write-Warning "Reboot required. Run with -Reboot to reboot automatically."
+        Write-Warn "Reboot required. Run with -Reboot to reboot automatically."
     }
 }

@@ -43,8 +43,8 @@ if ($results.Count -eq 0) {
     Write-Host "No live hosts found." -ForegroundColor Yellow
 } else {
     foreach ($r in $results) {
-        $host = if ($r.Hostname) { " ($($r.Hostname))" } else { '' }
-        Write-Host ("  {0,-18} {1,4}ms{2}" -f $r.IP, $r.RTT, $host) -ForegroundColor Green
+        $hostSuffix = if ($r.Hostname) { " ($($r.Hostname))" } else { '' }
+        Write-Host ("  {0,-18} {1,4}ms{2}" -f $r.IP, $r.RTT, $hostSuffix) -ForegroundColor Green
     }
 }
 
