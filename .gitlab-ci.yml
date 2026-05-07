@@ -52,6 +52,9 @@ include:
 security:gitleaks:
   extends: .gitleaks-scan
 
+security:trufflehog:
+  extends: .trufflehog-scan
+
 mirror:github:
   extends: .github-mirror
   variables:
